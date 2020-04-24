@@ -30,12 +30,13 @@ $payer->address = array(
 
 $preference->payer = $payer;
 
- // back_urls
+// back_urls
 $preference->back_urls = array(
     "success" => "https://manware-mp-ecommerce-php.herokuapp.com/retorno.php?status=success",
     "failure" => "https://manware-mp-ecommerce-php.herokuapp.com/retorno.php?status=failure",
     "pending" => "https://manware-mp-ecommerce-php.herokuapp.com/retorno.php?status=pending"
 );
+
 $preference->auto_return = "approved";
 
 // Crea un ítem en la preferencia
@@ -48,6 +49,12 @@ $item->quantity = $_POST['unit'];
 $item->unit_price = $_POST['price'];
 $preference->items = array($item);
 $preference->external_reference = "ABCD1234";
+
+$preference->payment_methods = array(
+"excluded_payment_methods" => array(array("id" => "amex")),
+"excluded_payment_types" => array(array("id" => "atm")),
+"installments" => 6);
+
 $preference->save();
 ?>
 <!DOCTYPE html>
@@ -183,12 +190,13 @@ $preference->save();
                                         </h3>
                                     </div>
 
-                                    <form action="/procesar-pago" method="POST">
+                                    <form action="/redirect.php" method="POST">
                                       <script
                                        src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
                                        data-preference-id="<?php echo $preference->id; ?>" data-header-color="#2D3277" data-elements-color="#2D3277" data-button-label="Pagar la compra">
                                       </script>
                                     </form>
+
 
                                 </div>
                             </div>

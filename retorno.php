@@ -2,7 +2,25 @@
 if(isset($_GET['status'])){
   $mensaje = "";
   if($_GET['status'] == 'success'){
-    $mensaje = "Tu pago ha sido aprobado.";
+
+    $token = $_ENV['access_token'];
+    $id = $_GET['payment_id'];
+    $cURL = "https://api.mercadopago.com/v1/payments/{$id}?access_token={$token}";
+
+    $ret = file_get_contents($cURL);
+
+    $aDatos = json_decode($ret, true);
+
+    $payment_method_id = $aDatos['payment_method_id'];
+    $order_id = $aDatos['order']['id'];
+    $total = $aDatos['transaction_details']['total_paid_amount'];
+
+    $mensaje = "Tu pago ha sido aprobado.
+      <br />
+      Payment_method_id: ".$payment_method_id."<br />
+      Order ID: ".$order_id."<br />
+      Total: $ ".$total;
+
   }
   if($_GET['status'] == 'failure'){
     $mensaje = "Tu pago ha sido rechazado.";
