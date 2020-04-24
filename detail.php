@@ -13,7 +13,10 @@ $payer = new MercadoPago\Payer();
 $payer->name = "Lalo";
 $payer->surname = "Landa";
 $payer->email = "test_user_63274575@testuser.com";
-$payer->identification = "22.333.444";
+$payer->identification = array(
+  "type" => "DNI",
+  "number" => "22333444"
+);
 $payer->phone = array(
   "area_code" => "011",
   "number" => "2222-3333"
