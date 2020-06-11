@@ -1,7 +1,7 @@
 <?php
-if(isset($_GET['status'])){
+if(isset($_GET['collection_status'])){
   $mensaje = "";
-  if($_GET['status'] == 'success'){
+  if($_GET['collection_status'] == 'approved'){
 
     $token = $_ENV['access_token'];
     $id = $_GET['payment_id'];
@@ -12,20 +12,20 @@ if(isset($_GET['status'])){
     $aDatos = json_decode($ret, true);
 
     $payment_method_id = $aDatos['payment_method_id'];
-    $order_id = $aDatos['order']['id'];
+    $collection_id = $_GET['collection_id'];
     $total = $aDatos['transaction_details']['total_paid_amount'];
 
     $mensaje = "Tu pago ha sido aprobado.
       <br />
-      Payment_method_id: ".$payment_method_id."<br />
-      Order ID: ".$order_id."<br />
+      payment_method_id: ".$payment_method_id."<br />
+      collection_id: ".$collection_id."<br />
       Total: $ ".$total;
 
   }
-  if($_GET['status'] == 'failure'){
+  if($_GET['collection_status'] == 'failure'){
     $mensaje = "Tu pago ha sido rechazado.";
   }
-  if($_GET['status'] == 'pending'){
+  if(($_GET['collection_status'] == 'pending') || ($_GET['collection_status'] == 'in_process')){
     $mensaje = "Tu pago está pendiente.";
   }
 } else {

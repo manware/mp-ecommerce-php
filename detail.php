@@ -3,12 +3,21 @@
 require __DIR__ .  '/vendor/autoload.php';
 
 // Agrega credenciales
+// Antes: APP_USR-6317427424180639-090914-5c508e1b02a34fcce879a999574cf5c9-469485398
+// Ahora: APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398
+//APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398
+//APP_USR-8196777983571350-042414-0a4eebcea5beb5ed8db3d88765d539f6-469485398
 MercadoPago\SDK::setAccessToken($_ENV['access_token']);
 
 // Crea un objeto de preferencia
 $preference = new MercadoPago\Preference();
 
 // Pagador
+/***
+ * ID 471923173
+Email test_user_63274575@testuser.com
+Password qatest2417
+ */
 $payer = new MercadoPago\Payer();
 $payer->name = "Lalo";
 $payer->surname = "Landa";
@@ -23,7 +32,7 @@ $payer->phone = array(
 );
 
 $payer->address = array(
-  "street_name" => "Falsa",
+  "street_name" => "False",
   "street_number" => 123,
   "zip_code" => "1111"
 );
@@ -48,7 +57,7 @@ $item->title = $_POST['title'];
 $item->quantity = $_POST['unit'];
 $item->unit_price = $_POST['price'];
 $preference->items = array($item);
-$preference->external_reference = "ABCD1234";
+$preference->external_reference = "fernando@transparent.com.ar";
 
 $preference->payment_methods = array(
 "excluded_payment_methods" => array(array("id" => "amex")),
@@ -190,12 +199,16 @@ $preference->save();
                                         </h3>
                                     </div>
 
+                                    <a href="<?php echo $preference->init_point; ?>">Pagar la compra</a>
+
+                                    <?/******
                                     <form action="/redirect.php" method="POST">
                                       <script
                                        src="https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js"
                                        data-preference-id="<?php echo $preference->id; ?>" data-header-color="#2D3277" data-elements-color="#2D3277" data-button-label="Pagar la compra">
                                       </script>
                                     </form>
+                                    *******/?>
 
 
                                 </div>
@@ -209,7 +222,7 @@ $preference->save();
         <div class="as-footnotes">
             <div class="as-footnotes-content">
                 <div class="as-footnotes-sosumi">
-                    Todos los derechos reservados Tienda Tecno 2019
+                    Todos los derechos reservados Tienda Tecno <?=date("Y");?> - By Fernando Cuadrado - Transparent Web S.A.S.
                 </div>
             </div>
         </div>
