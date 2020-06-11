@@ -8,6 +8,7 @@ require __DIR__ .  '/vendor/autoload.php';
 //APP_USR-6317427424180639-042414-47e969706991d3a442922b0702a0da44-469485398
 //APP_USR-8196777983571350-042414-0a4eebcea5beb5ed8db3d88765d539f6-469485398
 MercadoPago\SDK::setAccessToken($_ENV['access_token']);
+MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
 
 // Crea un objeto de preferencia
 $preference = new MercadoPago\Preference();
@@ -57,6 +58,7 @@ $item->title = $_POST['title'];
 $item->quantity = $_POST['unit'];
 $item->unit_price = $_POST['price'];
 $preference->items = array($item);
+$preference->notification_url = 'https://manware-mp-ecommerce-php.herokuapp.com/ipn.php';
 $preference->external_reference = "fernando@transparent.com.ar";
 
 $preference->payment_methods = array(
@@ -79,6 +81,8 @@ $preference->save();
     src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
     crossorigin="anonymous"></script>
+
+    <script src="https://www.mercadopago.com/v2/security.js" view="item"></script>
 
     <link rel="stylesheet" href="./assets/category-landing.css" media="screen, print">
 
