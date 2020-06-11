@@ -4,7 +4,7 @@ if(isset($_GET['collection_status'])){
   if($_GET['collection_status'] == 'approved'){
 
     $token = $_ENV['access_token'];
-    $id = $_GET['payment_id'];
+    $id = $_GET['collection_id'];
     $cURL = "https://api.mercadopago.com/v1/payments/{$id}?access_token={$token}";
 
     $ret = file_get_contents($cURL);
@@ -13,13 +13,15 @@ if(isset($_GET['collection_status'])){
 
     $payment_method_id = $aDatos['payment_method_id'];
     $collection_id = $_GET['collection_id'];
+    $payment_type = $_GET['payment_type'];
     $total = $aDatos['transaction_details']['total_paid_amount'];
 
     $mensaje = "Tu pago ha sido aprobado.
-      <br />
-      payment_method_id: ".$payment_method_id."<br />
-      collection_id: ".$collection_id."<br />
-      Total: $ ".$total;
+      <br /><br />
+      1) payment_method_id: ".$payment_method_id."<br />
+      2) payment_type: ".$payment_type."<br />
+      3) collection_id: ".$collection_id."<br />
+      4) Total: $ ".$total;
 
   }
   if($_GET['collection_status'] == 'failure'){
@@ -106,7 +108,7 @@ if(isset($_GET['collection_status'])){
         <div class="as-footnotes">
             <div class="as-footnotes-content">
                 <div class="as-footnotes-sosumi">
-                    Todos los derechos reservados Tienda Tecno 2019
+                    Todos los derechos reservados Tienda Tecno <?=date("Y");?> - by Fernando Cuadrado - fernando@transparent.com.ar
                 </div>
             </div>
         </div>
